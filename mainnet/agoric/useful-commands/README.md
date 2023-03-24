@@ -1,11 +1,3 @@
----
-description: Useful set of commands for node operators. From key management to chain governance.
----
-
-# Useful commands
-
-<figure><img src="https://raw.githubusercontent.com/kj89/cosmos-images/main/logos/agoric.png" width="150" alt=""><figcaption></figcaption></figure>
-
 ## 🔑 Key management
 
 #### Add new key
