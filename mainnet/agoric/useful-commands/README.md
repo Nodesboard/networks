@@ -1,11 +1,3 @@
----
-description: Useful set of commands for node operators. From key management to chain governance.
----
-
-# Useful commands
-
-<figure><img src="https://raw.githubusercontent.com/kj89/cosmos-images/main/logos/agoric.png" width="150" alt=""><figcaption></figcaption></figure>
-
 ## 🔑 Key management
 
 #### Add new key
@@ -52,9 +44,9 @@ agd q bank balances $(agd keys show wallet -a)
 
 ## 👷 Validator management
 
-{% hint style="info" %}
-Please make sure you have adjusted **moniker**, **identity**, **details** and **website** to match your values.
-{% endhint %}
+
+- Please make sure you have adjusted **moniker**, **identity**, **details** and **website** to match your values.
+
 
 #### Create new validator
 
@@ -294,9 +286,8 @@ agd tendermint unsafe-reset-all --home $HOME/.agoric --keep-addr-book
 
 #### Remove node
 
-{% hint style='danger' %}
-Please, before proceeding with the next step! All chain data will be lost! Make sure you have backed up your **priv_validator_key.json**!
-{% endhint %}
+- Please, before proceeding with the next step! All chain data will be lost! Make sure you have backed up your **priv_validator_key.json**!
+
 
 ```bash
 cd $HOME
