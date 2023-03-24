@@ -286,9 +286,8 @@ agd tendermint unsafe-reset-all --home $HOME/.agoric --keep-addr-book
 
 #### Remove node
 
-{% hint style='danger' %}
-Please, before proceeding with the next step! All chain data will be lost! Make sure you have backed up your **priv_validator_key.json**!
-{% endhint %}
+- Please, before proceeding with the next step! All chain data will be lost! Make sure you have backed up your **priv_validator_key.json**!
+
 
 ```bash
 cd $HOME
