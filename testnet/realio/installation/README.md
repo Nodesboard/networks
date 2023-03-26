@@ -128,4 +128,4 @@ This installation guide is the bare minimum to get a node started. You should co
 
 > Use custom ports for each node so you can run multiple nodes on the same server
 
-> If you find a bug in this installation guide, please reach out to our [Discord Server](https://discord.gg/yV2nEunsTY) and let us know.
+> If you find a bug in this installation guide, please reach out to our [Discord Server](https://dc.nodesboard.com) and let us know.
