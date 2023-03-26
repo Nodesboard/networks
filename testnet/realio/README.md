@@ -1,3 +1,7 @@
+<p align="center">
+  <img height="100" height="auto" src="https://raw.githubusercontent.com/Nodesboard/networks/main/logos/realio.png">
+</p>
+
 ## Chain explorer
 [https://exp.nodesboard.com/realio](https://exp.nodesboard.com/realio)
 
