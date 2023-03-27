@@ -297,7 +297,7 @@ sudo rm /etc/systemd/system/canined.service
 sudo systemctl daemon-reload
 rm -f $(which canined)
 rm -rf $HOME/.canine
-rm -rf $HOME/agoric-sdk
+rm -rf $HOME/canine-chain
 ```
 
 ## ⚙️ Service Management
