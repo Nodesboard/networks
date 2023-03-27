@@ -4,8 +4,8 @@
 
 ```bash
 sudo systemctl stop canined
-cp $HOME/.jackal-network/data/priv_validator_state.json $HOME/.jackal-network/priv_validator_state.json.backup
-canined tendermint unsafe-reset-all --home $HOME/.jackal-network
+cp $HOME/.canine/data/priv_validator_state.json $HOME/.canine/priv_validator_state.json.backup
+canined tendermint unsafe-reset-all --home $HOME/.canine
 ```
 
 ### Get and configure the state sync information
@@ -23,9 +23,9 @@ sed -i \
   -e "s|^trust_height *=.*|trust_height = $SYNC_BLOCK_HEIGHT|" \
   -e "s|^trust_hash *=.*|trust_hash = \"$SYNC_BLOCK_HASH\"|" \
   -e "s|^persistent_peers *=.*|persistent_peers = \"$STATE_SYNC_PEER\"|" \
-  $HOME/.jackal-network/config/config.toml
+  $HOME/.canine/config/config.toml
 
-mv $HOME/.jackal-network/priv_validator_state.json.backup $HOME/.jackal-network/data/priv_validator_state.json
+mv $HOME/.canine/priv_validator_state.json.backup $HOME/.canine/data/priv_validator_state.json
 ```
 
 ### Restart the service and check the log

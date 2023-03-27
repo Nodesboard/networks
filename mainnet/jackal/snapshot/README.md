@@ -4,15 +4,15 @@
 
 ```bash
 sudo systemctl stop canined
-cp $HOME/.jackal-network/data/priv_validator_state.json $HOME/.jackal-network/priv_validator_state.json.backup
-rm -rf $HOME/.jackal-network/data
+cp $HOME/.canine/data/priv_validator_state.json $HOME/.canine/priv_validator_state.json.backup
+rm -rf $HOME/.canine/data
 ```
 
 ### Download latest snapshot
 
 ```bash
-curl -L https://ss.nodesboard.com/jackal/snapshot_latest.tar.lz4 | tar -Ilz4 -xf - -C $HOME/.jackal-network
-mv $HOME/.jackal-network/priv_validator_state.json.backup $HOME/.jackal-network/data/priv_validator_state.json
+curl -L https://ss.nodesboard.com/jackal/snapshot_latest.tar.lz4 | tar -Ilz4 -xf - -C $HOME/.canine
+mv $HOME/.canine/priv_validator_state.json.backup $HOME/.canine/data/priv_validator_state.json
 ```
 
 ### Restart the service and check the log
