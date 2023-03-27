@@ -1,8 +1,4 @@
-<p align="center">
-  <img height="100" height="auto" src="https://raw.githubusercontent.com/Nodesboard/networks/main/logos/realio.png">
-</p>
-
-
+## Instructions
 
 # Realio Node Installation Guide
 Feel free to skip this step if you already have Go and Cosmovisor.
