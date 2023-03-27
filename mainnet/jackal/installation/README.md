@@ -1,138 +1,125 @@
----
-description: Setting up your validator node has never been so easy. Get your validator running in minutes by following step by step instructions.
----
+## Instructions
+Feel free to skip this step if you already have Go and Cosmovisor.
 
-# Installation
 
-<figure><img src="https://raw.githubusercontent.com/kj89/cosmos-images/main/logos/jackal.png" width="150" alt=""><figcaption></figcaption></figure>
+## Install Go
+We will use Go `v1.19.3` as example here. The code below also cleanly removes any previous Go installation.
 
-**Chain ID**: jackal-1 | **Latest Version Tag**: v1.2.1 | **Custom Port**: 37
-
-### Setup validator name
-
-{% hint style='info' %}
-Replace **YOUR_MONIKER_GOES_HERE** with your validator name
-{% endhint %}
-
-```bash
-MONIKER="YOUR_MONIKER_GOES_HERE"
+```
+sudo rm -rvf /usr/local/go/
+wget https://golang.org/dl/go1.19.3.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz
+rm go1.19.3.linux-amd64.tar.gz
 ```
 
-### Install dependencies
+### Configure Go
+Unless you want to configure in a non-standard way, then set these in the `~/.profile` file.
 
-#### Update system and install build tools
-
-```bash
-sudo apt -q update
-sudo apt -qy install curl git jq lz4 build-essential
-sudo apt -qy upgrade
+```
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export GO111MODULE=on
+export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 ```
 
-#### Install Go
 
-```bash
-sudo rm -rf /usr/local/go
-curl -Ls https://go.dev/dl/go1.20.2.linux-amd64.tar.gz | sudo tar -xzf - -C /usr/local
-eval $(echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee /etc/profile.d/golang.sh)
-eval $(echo 'export PATH=$PATH:$HOME/go/bin' | tee -a $HOME/.profile)
+### Install Cosmovisor
+We will use Cosmovisor `v1.0.0` as example here.
+
+```
+go install github.com/cosmos/cosmos-sdk/cosmovisor/cmd/cosmovisor@v1.0.0
 ```
 
-### Download and build binaries
+## Install Node
+Install the current version of node binary.
 
-```bash
-# Clone project repository
+```
 cd $HOME
-rm -rf canine-chain
-git clone https://github.com/JackalLabs/canine-chain.git
-cd canine-chain
-git checkout v1.2.1
-
-# Build binaries
-make build
-
-# Prepare binaries for Cosmovisor
-mkdir -p $HOME/.canine/cosmovisor/genesis/bin
-mv build/canined $HOME/.canine/cosmovisor/genesis/bin/
-rm -rf build
-
-# Create application symlinks
-ln -s $HOME/.canine/cosmovisor/genesis $HOME/.canine/cosmovisor/current
-sudo ln -s $HOME/.canine/cosmovisor/current/bin/canined /usr/local/bin/canined
+git clone https://github.com/jackaltech/jackal-network.git
+cd jackal
+git checkout v0.8.0
+make install
 ```
 
-### Install Cosmovisor and create a service
+## Configure Node
+### Initialize Node
+Please replace `MONIKERNAME` with your own moniker.
 
-```bash
-# Download and install Cosmovisor
-go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@v1.4.0
+```
+canined init MONIKERNAME --chain-id jackalnetwork_3300-1
+```
 
-# Create service
-sudo tee /etc/systemd/system/canined.service > /dev/null << EOF
+### Download Genesis
+The genesis file link below is Nodesboard's mirror download. The best practice is to find the official genesis download link.
+
+```
+wget -O genesis.json https://ss.nodesboard.com/jackal/genesis.json --inet4-only
+mv genesis.json ~/.jackal-network/config
+```
+
+### Configure Peers
+Here is a script for you to update `persistent_peers` setting with these peers in `config.toml`.
+```
+PEERS=ad8afbc89ac64db1ee99fdd904cbd48876d44b7d@195.3.222.240:26256,c5b43622ecd7413dd41905f6f8f5b5befd299ced@65.109.65.210:32656,c2842c76779913e05fa4256e3caab852e1782951@202.61.194.254:60756,9bcaee1ad957fa75f60a6dd9d8870e53220794a9@104.37.187.214:60756,e0740626622af6f64c5c71cc8a2723bfc7eedf66@99.241.52.117:26456,d9bfa29e0cf9c4ce0cc9c26d98e5d97228f93b0b@65.109.88.38:37656,ee2ef67b49cbc7b4af7ff0b7321870a5d9ae69a5@65.108.138.80:17556,0daa5dcda773b1d3842ba2881cf27aab519a2cac@54.36.108.222:28656,af774f532cf4b53528b0c418d01dbec549207841@162.19.84.205:26656,519f2b648a2a8794ac33b195f39b6d836e09f8f2@131.153.154.13:26656,f3b96273f3b1a7d2594851badd4302f16db81cfa@23.29.55.92:26656,13cf937bc1525c587fa82b441013995238d68a6e@143.42.114.129:26656,55bbee79c024a5032222ee4cac0d932c4033c63a@142.132.209.97:26656,976d837d399c0914cca7ba81fcd554b1f3d7a7bd@216.209.198.116:26656
+sed -i.bak -e "s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.jackal-network/config/config.toml
+```
+
+## Launch Node
+### Configure Cosmovisor Folder
+Create Cosmovisor folders and load the node binary.
+
+```
+# Create Cosmovisor Folders
+mkdir -p ~/.jackal-network/cosmovisor/genesis/bin
+mkdir -p ~/.jackal-network/cosmovisor/upgrades
+
+# Load Node Binary into Cosmovisor Folder
+cp ~/go/bin/canined ~/.jackal-network/cosmovisor/genesis/bin
+```
+
+### Create Service File
+Create a `canined.service` file in the `/etc/systemd/system` folder with the following code snippet. Make sure to replace `USER` with your Linux user name. You need `sudo` previlege to do this step.
+
+```
 [Unit]
-Description=jackal node service
+Description="canined node"
 After=network-online.target
 
 [Service]
-User=$USER
-ExecStart=$(which cosmovisor) run start
-Restart=on-failure
-RestartSec=10
-LimitNOFILE=65535
-Environment="DAEMON_HOME=$HOME/.canine"
+User=USER
+ExecStart=/home/USER/go/bin/cosmovisor start
+Restart=always
+RestartSec=3
+LimitNOFILE=4096
 Environment="DAEMON_NAME=canined"
+Environment="DAEMON_HOME=/home/USER/.jackal-network"
+Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=false"
+Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
 Environment="UNSAFE_SKIP_BACKUP=true"
-Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:$HOME/.canine/cosmovisor/current/bin"
 
 [Install]
 WantedBy=multi-user.target
-EOF
-sudo systemctl daemon-reload
-sudo systemctl enable canined
 ```
 
-### Initialize the node
+### Start Node Service
+```
+# Enable service
+sudo systemctl enable canined.service
 
-```bash
-# Set node configuration
-canined config chain-id jackal-1
-canined config keyring-backend file
-canined config node tcp://localhost:37657
+# Start service
+sudo service canined start
 
-# Initialize the node
-canined init $MONIKER --chain-id jackal-1
-
-# Download genesis and addrbook
-curl -Ls https://snapshots.kjnodes.com/jackal/genesis.json > $HOME/.canine/config/genesis.json
-curl -Ls https://snapshots.kjnodes.com/jackal/addrbook.json > $HOME/.canine/config/addrbook.json
-
-# Add seeds
-sed -i -e "s|^seeds *=.*|seeds = \"400f3d9e30b69e78a7fb891f60d76fa3c73f0ecc@jackal.rpc.kjnodes.com:37659\"|" $HOME/.canine/config/config.toml
-
-# Set minimum gas price
-sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0.002ujkl\"|" $HOME/.canine/config/app.toml
-
-# Set pruning
-sed -i \
-  -e 's|^pruning *=.*|pruning = "custom"|' \
-  -e 's|^pruning-keep-recent *=.*|pruning-keep-recent = "100"|' \
-  -e 's|^pruning-keep-every *=.*|pruning-keep-every = "0"|' \
-  -e 's|^pruning-interval *=.*|pruning-interval = "19"|' \
-  $HOME/.canine/config/app.toml
-
-# Set custom ports
-sed -i -e "s%^proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:37658\"%; s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:37657\"%; s%^pprof_laddr = \"localhost:6060\"%pprof_laddr = \"localhost:37060\"%; s%^laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:37656\"%; s%^prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":37660\"%" $HOME/.canine/config/config.toml
-sed -i -e "s%^address = \"tcp://0.0.0.0:1317\"%address = \"tcp://0.0.0.0:37317\"%; s%^address = \":8080\"%address = \":37080\"%; s%^address = \"0.0.0.0:9090\"%address = \"0.0.0.0:37090\"%; s%^address = \"0.0.0.0:9091\"%address = \"0.0.0.0:37091\"%; s%^address = \"0.0.0.0:8545\"%address = \"0.0.0.0:37545\"%; s%^ws-address = \"0.0.0.0:8546\"%ws-address = \"0.0.0.0:37546\"%" $HOME/.canine/config/app.toml
+# Check logs
+sudo journalctl -fu canined
 ```
 
-### Download latest chain snapshot
+# Other Considerations
+This installation guide is the bare minimum to get a node started. You should consider the following as you become a more experienced node operator.
 
-```bash
-curl -L https://snapshots.kjnodes.com/jackal/snapshot_latest.tar.lz4 | tar -Ilz4 -xf - -C $HOME/.canine
-[[ -f $HOME/.canine/data/upgrade-info.json ]] && cp $HOME/.canine/data/upgrade-info.json $HOME/.canine/cosmovisor/genesis/upgrade-info.json
-```
 
-### Start service and check the logs
 
-```bash
-sudo systemctl start canined && sudo journalctl -u canined -f --no-hostname -o cat
-```
+> Configure firewall to close most ports while only leaving the p2p port (typically 26656) open
+
+> Use custom ports for each node so you can run multiple nodes on the same server
+
+> If you find a bug in this installation guide, please reach out to our [Discord Server](https://dc.nodesboard.com) and let us know.

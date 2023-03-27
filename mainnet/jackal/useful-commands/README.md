@@ -1,11 +1,3 @@
----
-description: Useful set of commands for node operators. From key management to chain governance.
----
-
-# Useful commands
-
-<figure><img src="https://raw.githubusercontent.com/kj89/cosmos-images/main/logos/jackal.png" width="150" alt=""><figcaption></figcaption></figure>
-
 ## 🔑 Key management
 
 #### Add new key
@@ -52,9 +44,9 @@ canined q bank balances $(canined keys show wallet -a)
 
 ## 👷 Validator management
 
-{% hint style="info" %}
-Please make sure you have adjusted **moniker**, **identity**, **details** and **website** to match your values.
-{% endhint %}
+
+- Please make sure you have adjusted **moniker**, **identity**, **details** and **website** to match your values.
+
 
 #### Create new validator
 
@@ -74,7 +66,7 @@ canined tx staking create-validator \
 --from wallet \
 --gas-adjustment 1.4 \
 --gas auto \
---gas-prices 0.002ujkl \
+--gas-prices 0.025ujkl \
 -y
 ```
 
@@ -91,14 +83,14 @@ canined tx staking edit-validator \
 --from wallet \
 --gas-adjustment 1.4 \
 --gas auto \
---gas-prices 0.002ujkl \
+--gas-prices 0.025ujkl \
 -y
 ```
 
 #### Unjail validator
 
 ```bash
-canined tx slashing unjail --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.002ujkl -y
+canined tx slashing unjail --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.025ujkl -y
 ```
 
 #### Jail reason
@@ -130,43 +122,43 @@ canined q staking validator $(canined keys show wallet --bech val -a)
 #### Withdraw rewards from all validators
 
 ```bash
-canined tx distribution withdraw-all-rewards --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.002ujkl -y
+canined tx distribution withdraw-all-rewards --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.025ujkl -y
 ```
 
 #### Withdraw commission and rewards from your validator
 
 ```bash
-canined tx distribution withdraw-rewards $(canined keys show wallet --bech val -a) --commission --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.002ujkl -y
+canined tx distribution withdraw-rewards $(canined keys show wallet --bech val -a) --commission --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.025ujkl -y
 ```
 
 #### Delegate tokens to yourself
 
 ```bash
-canined tx staking delegate $(canined keys show wallet --bech val -a) 1000000ujkl --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.002ujkl -y
+canined tx staking delegate $(canined keys show wallet --bech val -a) 1000000ujkl --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.025ujkl -y
 ```
 
 #### Delegate tokens to validator
 
 ```bash
-canined tx staking delegate <TO_VALOPER_ADDRESS> 1000000ujkl --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.002ujkl -y
+canined tx staking delegate <TO_VALOPER_ADDRESS> 1000000ujkl --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.025ujkl -y
 ```
 
 #### Redelegate tokens to another validator
 
 ```bash
-canined tx staking redelegate $(canined keys show wallet --bech val -a) <TO_VALOPER_ADDRESS> 1000000ujkl --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.002ujkl -y
+canined tx staking redelegate $(canined keys show wallet --bech val -a) <TO_VALOPER_ADDRESS> 1000000ujkl --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.025ujkl -y
 ```
 
 #### Unbond tokens from your validator
 
 ```bash
-canined tx staking unbond $(canined keys show wallet --bech val -a) 1000000ujkl --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.002ujkl -y
+canined tx staking unbond $(canined keys show wallet --bech val -a) 1000000ujkl --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.025ujkl -y
 ```
 
 #### Send tokens to the wallet
 
 ```bash
-canined tx bank send wallet <TO_WALLET_ADDRESS> 1000000ujkl --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.002ujkl -y
+canined tx bank send wallet <TO_WALLET_ADDRESS> 1000000ujkl --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.025ujkl -y
 ```
 
 ## 🗳 Governance
@@ -186,25 +178,25 @@ canined query gov proposal 1
 #### Vote 'Yes'
 
 ```bash
-canined tx gov vote 1 yes --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.002ujkl -y
+canined tx gov vote 1 yes --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.025ujkl -y
 ```
 
 #### Vote 'No'
 
 ```bash
-canined tx gov vote 1 no --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.002ujkl -y
+canined tx gov vote 1 no --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.025ujkl -y
 ```
 
 #### Vote 'Abstain'
 
 ```bash
-canined tx gov vote 1 abstain --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.002ujkl -y
+canined tx gov vote 1 abstain --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.025ujkl -y
 ```
 
 #### Vote 'NoWithVeto'
 
 ```bash
-canined tx gov vote 1 NoWithVeto --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.002ujkl -y
+canined tx gov vote 1 NoWithVeto --from wallet --chain-id jackal-1 --gas-adjustment 1.4 --gas auto --gas-prices 0.025ujkl -y
 ```
 
 ## ⚡️ Utility
@@ -213,8 +205,8 @@ canined tx gov vote 1 NoWithVeto --from wallet --chain-id jackal-1 --gas-adjustm
 
 ```bash
 CUSTOM_PORT=10
-sed -i -e "s%^proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${CUSTOM_PORT}658\"%; s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:${CUSTOM_PORT}657\"%; s%^pprof_laddr = \"localhost:6060\"%pprof_laddr = \"localhost:${CUSTOM_PORT}060\"%; s%^laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${CUSTOM_PORT}656\"%; s%^prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${CUSTOM_PORT}660\"%" $HOME/.canine/config/config.toml
-sed -i -e "s%^address = \"tcp://0.0.0.0:1317\"%address = \"tcp://0.0.0.0:${CUSTOM_PORT}317\"%; s%^address = \":8080\"%address = \":${CUSTOM_PORT}080\"%; s%^address = \"0.0.0.0:9090\"%address = \"0.0.0.0:${CUSTOM_PORT}090\"%; s%^address = \"0.0.0.0:9091\"%address = \"0.0.0.0:${CUSTOM_PORT}091\"%" $HOME/.canine/config/app.toml
+sed -i -e "s%^proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${CUSTOM_PORT}658\"%; s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:${CUSTOM_PORT}657\"%; s%^pprof_laddr = \"localhost:6060\"%pprof_laddr = \"localhost:${CUSTOM_PORT}060\"%; s%^laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${CUSTOM_PORT}656\"%; s%^prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${CUSTOM_PORT}660\"%" $HOME/.agoric/config/config.toml
+sed -i -e "s%^address = \"tcp://0.0.0.0:1317\"%address = \"tcp://0.0.0.0:${CUSTOM_PORT}317\"%; s%^address = \":8080\"%address = \":${CUSTOM_PORT}080\"%; s%^address = \"0.0.0.0:9090\"%address = \"0.0.0.0:${CUSTOM_PORT}090\"%; s%^address = \"0.0.0.0:9091\"%address = \"0.0.0.0:${CUSTOM_PORT}091\"%" $HOME/.agoric/config/app.toml
 ```
 
 #### Update Indexer
@@ -222,13 +214,13 @@ sed -i -e "s%^address = \"tcp://0.0.0.0:1317\"%address = \"tcp://0.0.0.0:${CUSTO
 ##### Disable indexer
 
 ```bash
-sed -i -e 's|^indexer *=.*|indexer = "null"|' $HOME/.canine/config/config.toml
+sed -i -e 's|^indexer *=.*|indexer = "null"|' $HOME/.agoric/config/config.toml
 ```
 
 ##### Enable indexer
 
 ```bash
-sed -i -e 's|^indexer *=.*|indexer = "kv"|' $HOME/.canine/config/config.toml
+sed -i -e 's|^indexer *=.*|indexer = "kv"|' $HOME/.agoric/config/config.toml
 ```
 
 #### Update pruning
@@ -239,7 +231,7 @@ sed -i \
   -e 's|^pruning-keep-recent *=.*|pruning-keep-recent = "100"|' \
   -e 's|^pruning-keep-every *=.*|pruning-keep-every = "0"|' \
   -e 's|^pruning-interval *=.*|pruning-interval = "19"|' \
-  $HOME/.canine/config/app.toml
+  $HOME/.agoric/config/app.toml
 ```
 
 ## 🚨 Maintenance
@@ -259,7 +251,7 @@ canined status 2>&1 | jq .SyncInfo
 #### Get node peer
 
 ```bash
-echo $(canined tendermint show-node-id)'@'$(curl -s ifconfig.me)':'$(cat $HOME/.canine/config/config.toml | sed -n '/Address to listen for incoming connection/{n;p;}' | sed 's/.*://; s/".*//')
+echo $(canined tendermint show-node-id)'@'$(curl -s ifconfig.me)':'$(cat $HOME/.agoric/config/config.toml | sed -n '/Address to listen for incoming connection/{n;p;}' | sed 's/.*://; s/".*//')
 ```
 
 #### Check if validator key is correct
@@ -271,32 +263,31 @@ echo $(canined tendermint show-node-id)'@'$(curl -s ifconfig.me)':'$(cat $HOME/.
 #### Get live peers
 
 ```bash
-curl -sS http://localhost:37657/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}'
+curl -sS http://localhost:27657/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}'
 ```
 
 #### Set minimum gas price
 
 ```bash
-sed -i -e "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0.002ujkl\"/" $HOME/.canine/config/app.toml
+sed -i -e "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0.025ujkl\"/" $HOME/.agoric/config/app.toml
 ```
 
 #### Enable prometheus
 
 ```bash
-sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.canine/config/config.toml
+sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.agoric/config/config.toml
 ```
 
 #### Reset chain data
 
 ```bash
-canined tendermint unsafe-reset-all --home $HOME/.canine --keep-addr-book
+canined tendermint unsafe-reset-all --home $HOME/.agoric --keep-addr-book
 ```
 
 #### Remove node
 
-{% hint style='danger' %}
-Please, before proceeding with the next step! All chain data will be lost! Make sure you have backed up your **priv_validator_key.json**!
-{% endhint %}
+- Please, before proceeding with the next step! All chain data will be lost! Make sure you have backed up your **priv_validator_key.json**!
+
 
 ```bash
 cd $HOME
@@ -305,8 +296,8 @@ sudo systemctl disable canined
 sudo rm /etc/systemd/system/canined.service
 sudo systemctl daemon-reload
 rm -f $(which canined)
-rm -rf $HOME/.canine
-rm -rf $HOME/canine-chain
+rm -rf $HOME/.agoric
+rm -rf $HOME/agoric-sdk
 ```
 
 ## ⚙️ Service Management
