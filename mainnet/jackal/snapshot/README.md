@@ -18,5 +18,5 @@ mv $HOME/.canine/priv_validator_state.json.backup $HOME/.canine/data/priv_valida
 ### Restart the service and check the log
 
 ```bash
-sudo systemctl start canined && sudo journalctl -u canined -f --no-hostname -o cat
+sudo systemctl restart canined && sudo journalctl -u canined -f --no-hostname -o cat
 ```
