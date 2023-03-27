@@ -205,8 +205,8 @@ realio-networkd tx gov vote 1 NoWithVeto --from wallet --chain-id realionetwork_
 
 ```bash
 CUSTOM_PORT=10
-sed -i -e "s%^proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${CUSTOM_PORT}658\"%; s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:${CUSTOM_PORT}657\"%; s%^pprof_laddr = \"localhost:6060\"%pprof_laddr = \"localhost:${CUSTOM_PORT}060\"%; s%^laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${CUSTOM_PORT}656\"%; s%^prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${CUSTOM_PORT}660\"%" $HOME/.agoric/config/config.toml
-sed -i -e "s%^address = \"tcp://0.0.0.0:1317\"%address = \"tcp://0.0.0.0:${CUSTOM_PORT}317\"%; s%^address = \":8080\"%address = \":${CUSTOM_PORT}080\"%; s%^address = \"0.0.0.0:9090\"%address = \"0.0.0.0:${CUSTOM_PORT}090\"%; s%^address = \"0.0.0.0:9091\"%address = \"0.0.0.0:${CUSTOM_PORT}091\"%" $HOME/.agoric/config/app.toml
+sed -i -e "s%^proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${CUSTOM_PORT}658\"%; s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:${CUSTOM_PORT}657\"%; s%^pprof_laddr = \"localhost:6060\"%pprof_laddr = \"localhost:${CUSTOM_PORT}060\"%; s%^laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${CUSTOM_PORT}656\"%; s%^prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${CUSTOM_PORT}660\"%" $HOME/.realio-network/config/config.toml
+sed -i -e "s%^address = \"tcp://0.0.0.0:1317\"%address = \"tcp://0.0.0.0:${CUSTOM_PORT}317\"%; s%^address = \":8080\"%address = \":${CUSTOM_PORT}080\"%; s%^address = \"0.0.0.0:9090\"%address = \"0.0.0.0:${CUSTOM_PORT}090\"%; s%^address = \"0.0.0.0:9091\"%address = \"0.0.0.0:${CUSTOM_PORT}091\"%" $HOME/.realio-network/config/app.toml
 ```
 
 #### Update Indexer
@@ -214,13 +214,13 @@ sed -i -e "s%^address = \"tcp://0.0.0.0:1317\"%address = \"tcp://0.0.0.0:${CUSTO
 ##### Disable indexer
 
 ```bash
-sed -i -e 's|^indexer *=.*|indexer = "null"|' $HOME/.agoric/config/config.toml
+sed -i -e 's|^indexer *=.*|indexer = "null"|' $HOME/.realio-network/config/config.toml
 ```
 
 ##### Enable indexer
 
 ```bash
-sed -i -e 's|^indexer *=.*|indexer = "kv"|' $HOME/.agoric/config/config.toml
+sed -i -e 's|^indexer *=.*|indexer = "kv"|' $HOME/.realio-network/config/config.toml
 ```
 
 #### Update pruning
@@ -231,7 +231,7 @@ sed -i \
   -e 's|^pruning-keep-recent *=.*|pruning-keep-recent = "100"|' \
   -e 's|^pruning-keep-every *=.*|pruning-keep-every = "0"|' \
   -e 's|^pruning-interval *=.*|pruning-interval = "19"|' \
-  $HOME/.agoric/config/app.toml
+  $HOME/.realio-network/config/app.toml
 ```
 
 ## 🚨 Maintenance
@@ -251,7 +251,7 @@ realio-networkd status 2>&1 | jq .SyncInfo
 #### Get node peer
 
 ```bash
-echo $(realio-networkd tendermint show-node-id)'@'$(curl -s ifconfig.me)':'$(cat $HOME/.agoric/config/config.toml | sed -n '/Address to listen for incoming connection/{n;p;}' | sed 's/.*://; s/".*//')
+echo $(realio-networkd tendermint show-node-id)'@'$(curl -s ifconfig.me)':'$(cat $HOME/.realio-network/config/config.toml | sed -n '/Address to listen for incoming connection/{n;p;}' | sed 's/.*://; s/".*//')
 ```
 
 #### Check if validator key is correct
@@ -269,19 +269,19 @@ curl -sS http://localhost:27657/net_info | jq -r '.result.peers[] | "\(.node_inf
 #### Set minimum gas price
 
 ```bash
-sed -i -e "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0.025ario\"/" $HOME/.agoric/config/app.toml
+sed -i -e "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0.025ario\"/" $HOME/.realio-network/config/app.toml
 ```
 
 #### Enable prometheus
 
 ```bash
-sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.agoric/config/config.toml
+sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.realio-network/config/config.toml
 ```
 
 #### Reset chain data
 
 ```bash
-realio-networkd tendermint unsafe-reset-all --home $HOME/.agoric --keep-addr-book
+realio-networkd tendermint unsafe-reset-all --home $HOME/.realio-network --keep-addr-book
 ```
 
 #### Remove node
@@ -296,8 +296,8 @@ sudo systemctl disable realio-networkd
 sudo rm /etc/systemd/system/realio-networkd.service
 sudo systemctl daemon-reload
 rm -f $(which realio-networkd)
-rm -rf $HOME/.agoric
-rm -rf $HOME/agoric-sdk
+rm -rf $HOME/.realio-network
+rm -rf $HOME/realio-network
 ```
 
 ## ⚙️ Service Management
