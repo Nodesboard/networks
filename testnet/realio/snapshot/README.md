@@ -11,7 +11,7 @@ rm -rf $HOME/.realio-network/data
 ### Download latest snapshot
 
 ```bash
-curl -L https://ss.nodesboard.com/t/realio/snapshot_latest.tar.lz4 | tar -Ilz4 -xf - -C $HOME/.realio-network
+curl -L https://ss.nodesboard.com/t/realio/snapshot_latest.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.canine --strip-components 2
 mv $HOME/.realio-network/priv_validator_state.json.backup $HOME/.realio-network/data/priv_validator_state.json
 ```
 

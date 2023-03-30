@@ -11,7 +11,7 @@ rm -rf $HOME/.canine/data
 ### Download latest snapshot
 
 ```bash
-curl -L https://ss.nodesboard.com/jackal/snapshot_latest.tar.lz4 | tar -Ilz4 -xf - -C $HOME/.canine
+curl -L https://ss.nodesboard.com/jackal/snapshot_latest.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.canine --strip-components 2
 mv $HOME/.canine/priv_validator_state.json.backup $HOME/.canine/data/priv_validator_state.json
 ```
 
