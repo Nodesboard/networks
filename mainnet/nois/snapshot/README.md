@@ -11,7 +11,7 @@ rm -rf $HOME/.noisd/data
 ### Download latest snapshot
 
 ```bash
-curl -L https://ss.nodesboard.com/nois/snapshot_latest.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.canine --strip-components 2
+curl -L https://ss.nodesboard.com/nois/snapshot_latest.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.noisd --strip-components 2
 mv $HOME/.noisd/priv_validator_state.json.backup $HOME/.noisd/data/priv_validator_state.json
 ```
 

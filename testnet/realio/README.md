@@ -14,7 +14,7 @@
 curl -Ls https://ss.nodesboard.com/t/realio/addrbook.json > $HOME/.realio-network/config/addrbook.json
 ```
 
-**live-peers** (36)
+**live-peers** 
 ```bash
 peers=""
 sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.realio-network/config/config.toml
